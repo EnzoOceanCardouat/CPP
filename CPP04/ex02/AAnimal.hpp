@@ -1,0 +1,16 @@
+#pragma once
+
+#include <iostream>
+
+class AAnimal {
+	protected:
+		std::string _type;
+	public:
+		AAnimal();
+		AAnimal(const AAnimal& other);
+		virtual ~AAnimal();
+		AAnimal& operator=(const AAnimal& other);
+		const std::string& getType() const;
+		virtual void makeSound() const=0;
+		void setType(std::string const &type);
+};
