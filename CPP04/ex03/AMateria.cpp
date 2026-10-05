@@ -2,7 +2,11 @@
 
 AMateria::AMateria() {};
 
-AMateria::AMateria(std::string const & type) {};
+AMateria::AMateria(std::string const & type) : _type(type) {};
+
+AMateria::AMateria(const AMateria& other) {
+	*this = other;
+}
 
 AMateria::~AMateria() {};
 
@@ -18,4 +22,8 @@ std::string const & AMateria::getType() const {
 
 void AMateria::setType(std::string type) {
 	_type = type;
+};
+
+AMateria* AMateria::clone() const {
+	return NULL;
 };

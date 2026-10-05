@@ -8,6 +8,7 @@ class AMateria {
 	public:
 		AMateria();
 		AMateria(std::string const & type);
+		AMateria(const AMateria& other);
 		virtual ~AMateria();
 		AMateria& operator=(const AMateria& other);
 		std::string const & getType() const;
