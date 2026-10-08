@@ -5,8 +5,8 @@
 class	Ice : public AMateria {
 	public:
 		Ice();
-		Ice(const Ice &materia);
-		Ice&	operator=(const Ice &materia);
+		Ice(const Ice &other);
+		Ice&	operator=(const Ice &other);
 		~Ice();
 		virtual Ice*	clone() const;
 		void	use(ICharacter& target);

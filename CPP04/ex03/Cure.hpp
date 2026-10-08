@@ -1,13 +1,12 @@
 #pragma once
 
 # include "AMateria.hpp"
-# include <string>
 
 class	Cure : public AMateria {
 	public:
 		Cure();
-		Cure(const Cure &materia);
-		Cure&	operator=(const Cure &materia);
+		Cure(const Cure &other);
+		Cure&	operator=(const Cure &other);
 		~Cure();
 		virtual Cure*	clone() const;
 		void	use(ICharacter& target);
