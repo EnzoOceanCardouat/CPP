@@ -3,16 +3,35 @@
 MateriaSource::MateriaSource() {}
 
 MateriaSource::MateriaSource(MateriaSource &other) {
+	for (int i =0; i < 4; i++) {
+		if (other._memory[i])
+			_memory[i] = other._memory[i]->clone();
+		else
+			_memory[i] = NULL;
+	}
 	*this = other;
 }
 
 MateriaSource &MateriaSource::operator=(MateriaSource &other) {
-	if (this != &other)
-		_memory[4] = other._memory[4];
-	return *this;
+	if (this != &other) {
+		for (int i = 0; i < 4; i++) {
+			if (_memory[i])
+				delete _memory[i];
+			if (other._memory[i])
+				_memory[i] = other._memory[i]->clone();
+			else
+				_memory[i] = NULL;
+		}
+	}
+	return (*this);
 }
 
-MateriaSource::~MateriaSource() {};
+MateriaSource::~MateriaSource() {
+	for (int i =0; i < 4; i++) {
+		if (_memory[i])
+			delete _memory[i];
+	}
+};
 
 void MateriaSource::learnMateria(AMateria* m) {
 	for (int i =0; i < 4; i++) {
@@ -25,16 +44,8 @@ void MateriaSource::learnMateria(AMateria* m) {
 
 AMateria *MateriaSource::createMateria(std::string const &type) {
 	for (int i =0; i < 4; i++) {
-		if (_memory[i]) {
-			if (type == "Ice") {
-				new AMateria(type);
-			}
-			else if (type == "Cure") {
-
-			}
-			else
-				return 0;
-		}
+		if (_memory[i] && _memory[i]->getType() == type)
+				return _memory[i]->clone();
 	}
-
+	return 0;
 }

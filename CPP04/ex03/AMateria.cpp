@@ -1,4 +1,4 @@
-#include "AMateria.hpp"
+#include "ICharacter.hpp"
 
 AMateria::AMateria() {}
 
@@ -25,10 +25,10 @@ AMateria* AMateria::clone() const {
 }
 
 void AMateria::use(ICharacter& target) {
-	if (this->getType() == "Ice")
-		std::cout << "* shoots an ice bolt at " << target->getName() << " *" << std::endl;
-	else if (this->getType() == "Cure")
-		std::cout << "* heals " << target->getName() << "’s wounds *" << std::endl;
+	if (this->getType() == "ice")
+		std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
+	else if (this->getType() == "cure")
+		std::cout << "* heals " << target.getName() << "’s wounds *" << std::endl;
 	else
 		std::cout << "* do nothings *" << std::endl;
 }

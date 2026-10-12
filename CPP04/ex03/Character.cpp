@@ -2,10 +2,19 @@
 
 Character::Character() {}
 
-Character::Character(std::string const &name) : _name(name) {}
+Character::Character(std::string const &name) : _name(name) {
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = NULL;
+}
 
 Character::Character(Character &other) {
-	*this = other;
+	_name = other.getName();
+	for (int i = 0; i < 4; i++) {
+		if (other._inventory[i])
+			_inventory[i] = other._inventory[i]->clone();
+		else
+			_inventory[i] = NULL;
+	}
 }
 
 Character & Character::operator=(Character &other) {
@@ -16,20 +25,32 @@ Character & Character::operator=(Character &other) {
 	return *this;
 }
 
-Character::~Character() {};
+Character::~Character() {
+	for (int i =0; i < 4; i++) {
+		if (_inventory[i])
+			delete _inventory[i];
+	}
+};
 
 std::string const& Character::getName() const {
 	return this->_name;
 }
 
 void Character::equip(AMateria* materia) {
+	if (!materia) {
+		std::cout << "Can't equip materia is NULL" << std::endl;
+		return ;
+	}
 	for (int i = 0; i < 4; i++) {
-		if (!this->_inventory[i]) {
-			this->_inventory[i] = materia;
+		if (_inventory[i] == materia) {
+			std::cout << "materia already equip in iventory slot " << i << std::endl;
 			return ;
 		}
+		else if (!_inventory[i]) {
+			_inventory[i] = materia;
+		}
 	}
-	this->_inventory[4] = materia;
+
 }
 
 void Character::unequip(int idx) {
@@ -37,10 +58,10 @@ void Character::unequip(int idx) {
 }
 
 void Character::use(int idx, ICharacter &target) {
-	if (this->_inventory[idx]->getType() == "Ice")
-		std::cout << "* shoots an ice bolt at " << this->_name << " *" << std::endl;
-	else if (this->_inventory[idx]->getType() == "Cure")
-		std::cout << "* heals " << this->_name << "’s wounds *" << std::endl;
+	if (idx < 0 || idx > 4)
+		std::cout << "Given index (" << idx << ") is invalid" << std::endl;
+	else if (_inventory[idx])
+		_inventory[idx]->use(target);
 	else
-		std::cout << "* do nothings *" << std::endl;
+		std::cout << "Inventory index " << idx << " is empty" << std::endl;
 }
